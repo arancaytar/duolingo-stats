@@ -20,4 +20,4 @@ def load_scores(all_languages=False):
         except:
             pass
 
-    return pandas.DataFrame(records, rows)
+    return pandas.DataFrame(records, rows).sort_index()
