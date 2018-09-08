@@ -7,13 +7,15 @@ Acquire your stats from Duolingo's public-facing API.
 Create a file named `username.txt` in this directory, and enter only
 your Duolingo username.
 
-Run `./acquire.py` to load your profile data from Duolingo. It will
-be saved as a timestamped JSON file in the `data/` directory. You can
-use cron or another external scheduler to regularly run `acquire.py`.
+Run `./acquire_main.py` to load your profile data from Duolingo. It
+will be saved as a timestamped JSON file in the `data/` directory.
+You can use cron or another external scheduler to regularly run
+`acquire.py`.
 
-Note that the JSON file contains several hundred KB of likely
-irrelevant data, and is not trimmed or compressed. Daily stats
-will take up on the order of 100MB per year.
+Note that the raw JSON response returns much more data than is stored;
+this script only saves the 'languages' key containing the scores.
+The discarded information includes miscellaneous profile data, streak
+stats, and the entire tree of the currently active language.
 
 To analyze:
 
@@ -21,7 +23,7 @@ To analyze:
 
 import analyze
 
-df = analyze.load_data()
+df = analyze.load_scores()
 ```
 
 This will create a [Pandas Dataframe](https://pandas.pydata.org/) with
