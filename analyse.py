@@ -13,6 +13,7 @@ def load_scores(all_languages=False):
             timestamp = int(entry.name.split('.')[0])
             data = json.load(open(entry.path))
             record = {lang['language_string']: lang['points'] for lang in data['languages'] if all_languages or lang['learning']}
+            record['Total'] = sum(record.values())
 
             rows.append(timestamp)
             records.append(record)
