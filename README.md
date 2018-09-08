@@ -2,7 +2,7 @@
 
 Acquire your stats from Duolingo's public-facing API.
 
-## Usage
+## Acquisition
 
 Create a file named `username.txt` in this directory, and enter only
 your Duolingo username.
@@ -17,7 +17,11 @@ this script only saves the 'languages' key containing the scores.
 The discarded information includes miscellaneous profile data, streak
 stats, and the entire tree of the currently active language.
 
-To analyze:
+## Aggregation
+
+You can load the JSON data into a [Pandas Dataframe](https://pandas.pydata.org/)
+with your individual language scores at each given time, row-indexed by timestamp
+and column-indexed by language name:
 
 ```python
 
@@ -26,6 +30,7 @@ import analyze
 df = analyze.load_scores()
 ```
 
-This will create a [Pandas Dataframe](https://pandas.pydata.org/) with
-your individual language scores at each given time, row-indexed by timestamp
-and column-indexed by language name.
+## CSV Export
+
+To further process the data with non-Python tools, you can export the
+Dataframe in CSV form using `./export_csv.py`.
