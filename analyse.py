@@ -4,16 +4,19 @@ import pandas
 
 
 def load_data():
-    columns = set()
     rows = []
     records = []
 
-    for name in os.listdir('data'):
-        data = json.load(open(f'data/{name}'))
-        record = {lang['language_string']: lang['points'] for lang in data['languages']}
-        timestamp = int(name.split('.')[0])
+    for entry in os.scandir('data'):
+        try:
+            timestamp = int(entry.name.split('.')[0])
+            data = json.load(open(entry.path))
+            record = {lang['language_string']: lang['points'] for lang in data['languages']}
 
-        records.append(record)
-        rows.append(timestamp)
+            rows.append(timestamp)
+            records.append(record)
+        except:
+            pass
+
 
     return pandas.DataFrame(records, rows)
