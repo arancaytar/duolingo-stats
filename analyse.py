@@ -7,12 +7,13 @@ def load_data():
     columns = set()
     rows = []
     records = []
-    for name in os.listdir('data'):
-        timestamp = int(name.split('.')[0])
-        data = json.load(open(f'data/{name}'))
-        record = {x['language_string']: x['points'] for x in data['languages']}
-        rows.append(timestamp)
-        columns |= record.keys()
-        records.append(record)
 
-    return pandas.DataFrame(records, rows, columns)
+    for name in os.listdir('data'):
+        data = json.load(open(f'data/{name}'))
+        record = {lang['language_string']: lang['points'] for lang in data['languages']}
+        timestamp = int(name.split('.')[0])
+
+        records.append(record)
+        rows.append(timestamp)
+
+    return pandas.DataFrame(records, rows)
