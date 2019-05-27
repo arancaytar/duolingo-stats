@@ -5,10 +5,12 @@ import json
 import acquire
 
 try:
-    username = open('username.txt').read().strip()
+    uid = open('uid.txt').read().strip()
+except IOError:
+    raise ValueError('Enter your Duolingo user ID in the file `uid.txt`. To discover it, first use `Duolingo.login('
+                     'username, password).get_id(username).')
+else:
     json.dump(
-        {'languages': acquire.get_data(username)['languages']},
+        acquire.Duolingo.anonymous().get_fields(uid, 'courses'),
         open(f'data/{datetime.datetime.now():%s}.json', 'w')
     )
-except:
-    raise ValueError('Enter your Duolingo username in the file `username.txt`.')
